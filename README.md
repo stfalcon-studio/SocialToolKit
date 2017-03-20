@@ -72,7 +72,7 @@ Also don`t forget to add URL Types in Info section.
 
 LICENCE:
 
- Copyright (c) 2017 Vamelin <viktor.amelin@stfalcon.com>
+ Copyright (c) 2017 Stfalcon
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
