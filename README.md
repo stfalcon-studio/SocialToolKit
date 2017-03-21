@@ -37,7 +37,7 @@ For VK:
 Then in ViewController (for example) use:
 
 
-	StfalconSocial.sharedInstance.requestVKToken(permissions: ["friends", "photos"], appId: "your app id") { (token, error) in
+	SocialToolKit.sharedInstance.requestVKToken(permissions: ["friends", "photos"], appId: "your app id") { (token, error) in
             if error == nil {
                 print("TOKEN: \(token)")
             } else {
