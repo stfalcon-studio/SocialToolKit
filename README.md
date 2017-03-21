@@ -1,5 +1,5 @@
-# StfalconSocial
-StfalconSocial`s purpose is to get access token from Facebook or VK. You can use it to get token from specific social network, or from several (now supports only Facebook and VKontakte).
+# SocialToolKit
+Easy social network authorization for iOS. Supports Facebook, Vkontakte https://stfalcon.com
 
 How to install:
 
