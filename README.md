@@ -72,7 +72,6 @@ Insert the following XML snippet into the body of your file just before the fina
    - replace {your-app-name} with the display name you specified in the App Dashboard.
    - replace {human-readable reason for photo access} with the reason your app needs photo access.
     
-    
 3. In yor viewController add as button-action (for example):
 
 ```swift
@@ -132,7 +131,7 @@ Role:  Editor
             <string>vkauthorize</string> 
         </array>
 ```
-        if your use FB iOS SDK and VK iOS SDK it looks like:
+If you are using FB iOS SDK and VK iOS SDK it looks like this:
 ```xml
         <key>LSApplicationQueriesSchemes</key>
         <array>
