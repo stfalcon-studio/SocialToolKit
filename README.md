@@ -20,55 +20,143 @@ How to use:
 
 For Facebook:
 
-- add this three methods to your AppDelegate:
+Update this three methods in your AppDelegate:
 
-1). func appFBDidFinishLaunchingWithOptions(application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey: Any]?)
+1.
+```swift
+import SocialToolKit
 
-2). func appFBOpenURL(app: UIApplication, url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:])
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	SocialToolKit.sharedInstance.appFBDidFinishLaunchingWithOptions(application: application, launchOptions: launchOptions)
+return true
+}
 
-3). func appFBDidBecomeActive()
+func applicationDidBecomeActive(_ application: UIApplication) {
+	SocialToolKit.sharedInstance.appFBDidBecomeActive()
+}
+        
+func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+	SocialToolKit.sharedInstance.appFBOpenURL(app: app, url: url, options: options)
+	return true
+}
+```
+	
+2. Go to Info.plist, secondary-clic Info.plist and select OpenAs -> SourceCode.
+
+Insert the following XML snippet into the body of your file just before the final </dict> element.
+```xml
+	<key>CFBundleURLTypes</key>
+	<array>
+	    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>fb{your-app-id}</string>
+        </array>
+    </dict>
+	</array>
+		<key>FacebookAppID</key>
+			<string>{your-app-id}</string>
+		<key>FacebookDisplayName</key>
+			<string>{your-app-name}</string>
+		<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
+```
+
+   - replace fb{your-app-id} with your Facebook app ID, prefixed with fb. For example, fb123456. You can find your app ID on the Facebook App Dashboard — https://developers.facebook.com/apps.
+   - replace {your-app-id} with your app ID.
+   - replace {your-app-name} with the display name you specified in the App Dashboard.
+   - replace {human-readable reason for photo access} with the reason your app needs photo access.
+    
+    
+3. In yor viewController add as button-action (for example):
+
+```swift
+import SocialToolKit
+
+SocialToolKit.sharedInstance.requestFacebookToken(permissions: ["public_profile", "user_friends"], loginBehavior: FBSDKLoginBehavior.systemAccount, { (token, error) in
+	if error == nil {
+		print("TOKEN: \(token)")
+	} else {
+		print("ERROR: \(error?.localizedDescription)")
+	}
+})
+```
 
 For VK:
 
-- add this method to your AppDelegate:
+1. Update this method in your AppDelegate:
 
-1). func appVKOpenURL(sourceApplication: String?, url: URL)
+```swift
+import SocialToolKit
 
-Then in ViewController (for example) use:
+func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        SocialToolKit.sharedInstance.appVKOpenURL(sourceApplication: sourceApplication, url: url)
+        return true
+}
+```
+2. Go to Project -> Targets -> Info -> URL Types and add URL Schemes vk<your-app-id>, for example: 
 
+URL Schemes:  vk1234567
+Role:  Editor
 
-	SocialToolKit.sharedInstance.requestVKToken(permissions: ["friends", "photos"], appId: "your app id") { (token, error) in
-            if error == nil {
-                print("TOKEN: \(token)")
-            } else {
-                print("ERROR: \(error?.localizedDescription)")
-            }
-        }
-				
-Don`t forget to add all FacebookAppID and VKontakteAppID into Info.plist and:
+3. Go to Info.plist, secondary-clic Info.plist and select OpenAs -> SourceCode. And add AppTransportSequrity:
+```xml
+	<key>NSAppTransportSecurity</key>
+        <dict> 
+            <key>NSExceptionDomains</key> 
+            <dict> 
+                <key>vk.com</key> 
+                <dict> 
+                    <key>NSExceptionRequiresForwardSecrecy</key> 
+                    false/> 
+                    <key>NSIncludesSubdomains</key> 
+                    <true/> 
+                    <key>NSExceptionAllowsInsecureHTTPLoads</key> 
+                    <true/> 
+                </dict> 
+            </dict> 
+        </dict>
+```
+    
+4. Add (update) LSApplicationQueriesSchemes:
+```xml
+        <key>LSApplicationQueriesSchemes</key> 
+        <array> 
+            <string>vk</string> 
+            <string>vk-share</string> 
+            <string>vkauthorize</string> 
+        </array>
+```
+        if your use FB iOS SDK and VK iOS SDK it looks like:
+```xml
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>fbapi</string>
+            <string>fb-messenger-api</string>
+            <string>fbauth2</string>
+            <string>fbshareextension</string>
+            <string>vk</string>
+            <string>vk-share</string>
+            <string>vkauthorize</string>
+        </array>
+```
 
+5. Then in ViewController (for example) use:
 
-		<key>LSApplicationQueriesSchemes</key> 
- 
-    	<array>		  
-	
- 		  <string>fbapi</string>
-		
- 	  	<string>fb-messenger-api</string>
-		
- 		  <string>fbauth2</string>
-		
- 		  <string>fbshareextension</string>
-		
- 		  <string>vk</string>
-		
- 		  <string>vk-share</string>
-		
- 		  <string>vkauthorize</string>
-		
-	  </array>
-	 
-Also don`t forget to add URL Types in Info section.
+```swift
+SocialToolKit.sharedInstance.requestVKToken(permissions: ["friends", "photos"], appId: "your app id") { (token, error) in
+	if error == nil {
+		print("TOKEN: \(token)")
+	} else {
+		print("ERROR: \(error?.localizedDescription)")
+	}
+}
+	```	
 
 LICENCE:
 
