@@ -156,6 +156,21 @@ SocialToolKit.sharedInstance.requestVKToken(permissions: ["friends", "photos"], 
 	}
 }
 ```	
+For Instagramm:
+
+1. In ViewController:
+
+```swift
+@IBAction func instagramAction(_ sender: Any) {
+        SocialToolKit.sharedInstance.requestInstagramToken(permissions: ["basic"], clientID: "your cliend id", redirectURI: "your redirect uri") { token, error in
+            print(token)
+            print(error?.localizedDescription)
+        }
+    }
+```
+2. Register the client on https://www.instagram.com/developer
+3. Then go to Manage Clients -> Security -> uncheck Disable implicit OAuth.
+4. Add your redirect uri in Valid redirect URIs.
 
 LICENCE:
 
