@@ -1,5 +1,5 @@
 # SocialToolKit
-SocialToolKit purpose is to get access token from Facebook or VK. You can use it to get token from specific social network, or from several (now supports only Facebook and VKontakte).
+SocialToolKit purpose is to get access token from Facebook, VK or Instagram. You can use it to get token from specific social network, or from several (now supports only Facebook, VKontakte and Instagram).
 
 How to install:
 
